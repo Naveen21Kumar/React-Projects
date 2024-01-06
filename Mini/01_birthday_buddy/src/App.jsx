@@ -7,15 +7,15 @@ const App = () => {
   return (
     <main>
       <section className='container'>
-        <h3> {people.length} birthdays Today</h3>
-        <List people={people} />
+        <h3>{people.length} Birthdays Today</h3>
+        <List people={people}></List>
         <button
           type='button'
           className='btn btn-block'
           onClick={() => {
             setPeople([]);
           }}>
-          Clear All
+          clear all
         </button>
       </section>
     </main>
