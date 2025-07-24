@@ -304,3 +304,9 @@ main {
 .person p {
   color: var(--grey-500);
 }
+.p-1 {
+  padding: 1rem;
+}
+.m-1 {
+  margin: 1rem;
+}
