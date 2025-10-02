@@ -11,8 +11,8 @@ const Wrapper = styled.article`
   }
   img {
     height: 15rem;
-    border-top-left-radius: var(--borderRadius);
     border-top-right-radius: var(--borderRadius);
+    border-top-left-radius: var(--borderRadius);
   }
   .footer {
     padding: 1.5rem;

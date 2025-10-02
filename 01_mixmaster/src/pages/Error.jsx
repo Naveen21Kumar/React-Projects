@@ -1,10 +1,9 @@
-import { Link, useRouteError } from "react-router-dom";
-import img from '../assets/not-found.svg'
-import Wrapper from "../assets/wrappers/ErrorPage";
+import { Link, useRouteError } from 'react-router-dom';
+import img from '../assets/not-found.svg';
+import Wrapper from '../assets/wrappers/ErrorPage';
 
 const Error = () => {
   const error = useRouteError();
-  console.log(error.status);
   if (error.status === 404) {
     return (
       <Wrapper>
@@ -15,7 +14,7 @@ const Error = () => {
           <Link to='/'>back to home</Link>
         </div>
       </Wrapper>
-    )
+    );
   }
   return (
     <Wrapper>
@@ -23,7 +22,7 @@ const Error = () => {
         <h3>something went wrong</h3>
       </div>
     </Wrapper>
-  )
+  );
 };
 
 export default Error;
