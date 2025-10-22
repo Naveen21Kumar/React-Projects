@@ -171,24 +171,139 @@ const CocktailCard = ({ image, name, id, info, glass }) => {
   
 ### Render Ingredients
 - create a variable `validIngredients` and use Object.keys and assign singleDrink.
-      (key) => key.startsWith('strIngredient') && singleDrink[key] !== null
 - chain filter method to to filter the items that contain `strIngredient` and exclude `strIngredient` that are null
+- (key) => key.startsWith('strIngredient') && singleDrink[key] !== null
 - chain map method to return key of singleDrink. 
 - iterate over the `validIngredients`
 - handle comma at the last item
   
-## Additional Check
+### Additional Check
 - if data or the id is incorrect, create a condition on data and a fallback h2 element to display error.
 - if data or id is incorrect, import `Navigate` from react-router-dom and use it in condition to redirect to homepage.
 
-## Single Cocktail CSS (optional)
+### Single Cocktail CSS
 - assets/wrappers/CocktailPage.js  
 - Complete CSS code using styled component in `CocktailPage.js`
 
-## Setup React Toastify
-
+## 16. Setup React Toastify
 ```jsx
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 ```
 - setup ToastContainer in `Main.jsx` with position top-center and autoclose 2000ms
+
+## 17. Newsletter Page
+
+### Form Structure
+- Create a Form with name, last name, email input fields with labels for each input and provide a default value.
+- Create a block submit button.
+- Use Global styles and inline styles to styles the form elements.
+
+### Action setup and formData API
+- import `Form` from react-router-dom
+- change the from element to Form in the HTML and define the method.
+- create a action async function and destructure request in the parameter.
+- import the action function as alias in the App.jsx
+- assign the action function  to `action` property in the newsletter route.
+- create a `formData` variable and assign `formData()` coming from request.
+- create a `data` variable and assign `Object.fromEntries` method and pass `formData` variable inside the method.
+- log the `data`
+
+### Form Submit
+- import axios, toast, redirect from react-router-dom
+- create the url and get the URL link from readme.md
+- create axios response
+- create toast success message and redirect to home page. 
+
+### handle Errors
+- add a try catch block
+- keep the response and redirect code in try block
+- catch the error and pass the error msg to the toast, use optional chaining.
+- add required field for name and last name and remove default value.
+
+### Navigation State
+- import useNavigation from react-router-dom
+- invoke useNavigation() and assign it a variable
+- Create a variable and check the navigation state.
+- Based on the boolean value of navigation state, make the disabled/Enabled.
+
+## Search Form Component
+
+### Form Structure
+- Call the SearchForm in the Landing page.
+- - import `Form` from react-router-dom
+- change the from element to Form in the HTML.
+- Create a input field with type search and a default value.
+- Create a submit button.
+- apply the CSS classes for form, input, button.
+- check for navigation state (refer previous block).
+
+### Search Funtionality
+- Destructure `request` in the loader function in Landing.jsx
+- In JavaScript, `new URL()` is a constructor that creates a new URL object representing a parsed URL.
+- Create a variable url and assign `new URL()` constructor.
+- Pass the `url` from `request` to the new URL() constructor.
+- In searchTerm variable, access `searchParams` and get `query parameter` from the `url`
+```JS
+url.searchParams.get('search');
+```
+- is used in JavaScript to retrieve the value of a query parameter named "search" from a URL.
+- pass the `searchTerm` as props to SearchForm.
+- Change the default value in the input to `searchTerm`. 
+
+### Search Form CSS
+- assets/wrappers/SearchForm.js  
+- Complete CSS code using styled component in `SearchForm.js`
+
+## React Query
+
+### Setup
+- import `QueryClient` & `QueryClientProvider` from `@tanstack/react-query`
+- import `ReactQueryDevtools` from `@tanstack/react-query-devtools`
+- create a queryClient variable and assign the `QueryClient`.
+- Provide defaultOptions in the QueryClient with staleTime as 5 mins.
+- Wrap the RouterProvider inside the QueryClientProvider and pass the client.
+- Wrap the ReactQueryDevtools inside the QueryClientProvider with initialIsOpen as value false.
+
+### React Query - Landing Page Setup
+- Remove the axios response and drinks from loader function.
+- import `useQuery` from `@tanstack/react-query`.
+- Create a function `searchCocktailsQuery` and pass `searchTerm` as parameter.
+- inside the function return a object of `queryKey` and `queryFn`
+- the queryKey contains the searchTerm or 'all'.
+- the queryFn conatins a async function with the axios response and returns a response of the drinks
+- define useQuery inside the Landing component function, and pass the searchCocktailsQuery inside the `useQuery`.
+- Destructure `data` with alias `drinks` from the `useQuery`.  
+
+### React Query - Information
+- loader function is not a hook, useQuery is a hook
+- so need to find a way to invoke queryClient inside loader function.
+- Solution: Need to pass the useQuery from app.jsx down to loader.
+
+### React Query - Landing Page Complete
+- In App.jsx, pass the `queryClient` as argument to the loader function (alias landingLoader)
+- Transform the loader function to a function that takes a function as parameter and returns a function.
+- In Landing.jsx, pass the queryClient as parameter to the loader function and returns queryClient.
+- queryClient is a async function, that returns url searchTerm, and use queryClient to ensure the Query data by using `ensureQueryData` method.
+- pass the function `searchCocktailsQuery` to the `ensureQueryData` method.
+
+## React Query - Single Cocktail Page
+- In App.jsx, pass the `queryClient` as a parameter to the loader function.
+- Transform the loader function to a function that takes a function as parameter and returns a function.
+- In Cocktail.jsx, pass the queryClient as parameter to the loader function and returns queryClient.
+- import `useQuery` from `@tanstack/react-query`.
+- Create a function `singleCocktailQuery` and pass `id` as parameter.
+- inside the function return a object of `queryKey` and `queryFn`
+- the queryKey contains array of 'cocktail' and id.
+- the queryFn conatins a async function with the axios response and returns a response of the single cocktail
+- define useQuery inside the Cocktail component function, and pass the singleCocktailQuery inside the `useQuery`.
+- Destructure `data` from the `useQuery`.  
+- queryClient is a async function, that returns id, and use queryClient to ensure the Query data by using `ensureQueryData` method.
+
+## Redirects
+- in public folder,  create a file "\_redirects"
+
+```
+/* /index.html 200
+```
+
